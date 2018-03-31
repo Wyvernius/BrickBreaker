@@ -18,7 +18,7 @@ using Format = SharpDX.DXGI.Format;
 using Font = System.Drawing.Font;
 using System.Runtime.InteropServices;
 
-namespace Pong
+namespace BrickBreaker
 {
     public partial class Form1 : Form
     {
@@ -145,7 +145,8 @@ namespace Pong
             // Check Collision;
             if (ball.Collision(bumper.Bounds, out Result))
             {
-                ball.Speed.X = (bumper.Pos.X + (bumper.Size.X / 2)) - (ball.ball.Location.X - 8) / 10;
+                if (ball.Speed.X == 0)
+                    ball.Speed.X = maxSpeed.X;
                 ball.Speed.Y *= -1f;
             }
             DrawText(0, 20, ball.Speed.ToString());

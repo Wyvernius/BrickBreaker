@@ -1,4 +1,4 @@
-﻿namespace Pong
+﻿namespace BrickBreaker
 {
     partial class Form1
     {

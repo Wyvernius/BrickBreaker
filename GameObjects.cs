@@ -13,7 +13,7 @@ using FontFactory = SharpDX.DirectWrite.Factory;
 using Format = SharpDX.DXGI.Format;
 using Font = System.Drawing.Font;
 
-namespace Pong
+namespace BrickBreaker
 {
 
     static class Alg
