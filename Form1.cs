@@ -70,7 +70,7 @@ namespace BrickBreaker
             // Init brush
             BackColor = new SolidColorBrush(device, new Color4(255, 0, 255, 255));
             textFormat = new TextFormat(fontFactory, "Verdana", 22);
-            GameOverTextFormat = new TextFormat(fontFactory, "Arial", 100);
+            GameOverTextFormat = new TextFormat(fontFactory, "Arial", 75);
             if (this.ClientSize != Screen.PrimaryScreen.WorkingArea.Size)
                 this.ClientSize = Screen.PrimaryScreen.WorkingArea.Size;
             MainThread = new Thread(new ParameterizedThreadStart(MainFunction));
@@ -108,7 +108,7 @@ namespace BrickBreaker
                     }
                     else
                     {
-                        DrawText(Form1.ActiveForm.Width / 4, Form1.ActiveForm.Height / 4, "GameOver!", GameOverTextFormat);
+                        DrawText((Form1.ActiveForm.Width / 2) - (("GameOver!".Length/4) * GameOverTextFormat.FontSize), Form1.ActiveForm.Height / 4, "GameOver!", GameOverTextFormat);
                     }
                 }
                 device.EndDraw();
@@ -206,7 +206,7 @@ namespace BrickBreaker
             }
             if (ball.ball.Bottom > ScreenBounds.Bottom)
             {
-                ball.Speed.Y *= -1;
+                GameOver = true;// ball.Speed.Y *= -1;
                 return;
             }
         }
