@@ -69,18 +69,20 @@ namespace BrickBreaker
 
             // Init brush
             BackColor = new SolidColorBrush(device, new Color4(255, 0, 255, 255));
+            // init textformat
             textFormat = new TextFormat(fontFactory, "Verdana", 22);
             GameOverTextFormat = new TextFormat(fontFactory, "Arial", 75);
             if (this.ClientSize != Screen.PrimaryScreen.WorkingArea.Size)
                 this.ClientSize = Screen.PrimaryScreen.WorkingArea.Size;
+            // start main Thread.
             MainThread = new Thread(new ParameterizedThreadStart(MainFunction));
             MainThread.Start();
         }
 
         public void SetupGameRule()
         {
-            wall = new GameObjects.Wall(16, 16, 60, 20);
-            bumper = new GameObjects.Bumper();
+            wall = new GameObjects.Wall(16, 16, 60, 20); // Settup wall
+            bumper = new GameObjects.Bumper(); // Init Bumber
             ball = new GameObjects.Ball(8);
         }
 
@@ -92,11 +94,7 @@ namespace BrickBreaker
             {
                 device.BeginDraw();
                 device.Clear(new RawColor4(0, 0, 0, 255));
-                if (!ruleSet.start)
-                {
-                    
-                }
-                else
+                if (ruleSet.start)
                 {
                     if (!GameOver)
                     {
@@ -122,8 +120,8 @@ namespace BrickBreaker
         int Result;
         public void MoveBall()
         {
-            float time = 1f / 60f;
-            Form1_KeyDown();
+            float time = 1f / 60f; // set Update time (60fps)
+            Form1_KeyDown(); // Get KeyPResses.
             if (ball.Speed.Y == 0)
             {
                 ball.Speed.Y = maxSpeed.Y;
@@ -132,6 +130,7 @@ namespace BrickBreaker
                 ball.Speed.Y = maxSpeed.Y;
             if (ball.Speed.Y < -maxSpeed.Y)
                 ball.Speed.Y = -maxSpeed.Y;
+
             if (ball.Speed.X > maxSpeed.X)
                 ball.Speed.X = maxSpeed.X;
             if (ball.Speed.X < -maxSpeed.X)
@@ -154,6 +153,7 @@ namespace BrickBreaker
             DrawText(0, 60, bumper.Pos.ToString());
             DrawText(0, 80, (ball.ball.Location - bumper.Pos).ToString());
 
+            // Check collision with wall.
             for (int i = 0; i < wall.Field.Count(); i++)
             {
                 if (ball.Collision(wall.Field[i].Getbounds(), out Result))
@@ -206,14 +206,14 @@ namespace BrickBreaker
             }
             if (ball.ball.Bottom > ScreenBounds.Bottom)
             {
-                GameOver = true;// ball.Speed.Y *= -1;
+                GameOver = true;// ball fell through bottom screen.
                 return;
             }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            KeepRunning = false;
+            KeepRunning = false; // signal mainthread to stop running.
         }
 
         private void Form1_KeyDown()

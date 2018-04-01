@@ -38,6 +38,9 @@ namespace BrickBreaker
             public Vector2 Speed = new Vector2(0, 0);
             public RectangleF ball = new RectangleF();
             
+
+            // Initialize new ball 
+            // Note: We draw a circle but the BoundingBox for checking collision is a Rectangle.
             public Ball(int size)
             {
                 ball = new RectangleF(0, 0, size, size);
