@@ -155,7 +155,7 @@ namespace BrickBreaker
             public void DrawBumper(WindowRenderTarget device)
             {
                 this.Bounds = new RectangleF(Pos.X, Pos.Y, Size.X, Size.Y);
-                device.DrawRectangle(this.Bounds, new SolidColorBrush(device, new RawColor4(0, 255, 0, 255)));
+                device.DrawRectangle(this.Bounds, new SolidColorBrush(device, new RawColor4(255, 255, 255, 255)));
             }
 
             public void AdjPos(int x)

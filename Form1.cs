@@ -43,11 +43,15 @@ namespace BrickBreaker
         GameObjects.Bumper bumper = null;
         GameObjects.Ball ball = null;
         GameObjects.RuleSet ruleSet = null;
-        Vector2 maxSpeed = new Vector2(5f,5f);
-        
+        Vector2 maxSpeed = new Vector2(10f,10f);
+        float UpdateTime = 0;
+
+
         public Form1()
         {
             InitializeComponent();
+
+            UpdateTime = 1f / 60f; // set Update time (60fps)
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -112,7 +116,7 @@ namespace BrickBreaker
                 device.EndDraw();
 
                 
-                Thread.Sleep(8);
+                Thread.Sleep((int)UpdateTime);
             }
         }
 
@@ -120,7 +124,6 @@ namespace BrickBreaker
         int Result;
         public void MoveBall()
         {
-            float time = 1f / 60f; // set Update time (60fps)
             Form1_KeyDown(); // Get KeyPResses.
             if (ball.Speed.Y == 0)
             {
@@ -137,9 +140,9 @@ namespace BrickBreaker
                 ball.Speed.X = -maxSpeed.X;
 
             if (ruleSet.gravity)
-                ball.Speed.Y -= 0.5f * -100f * time * time;
-            ball.ball.X += ball.Speed.X;
-            ball.ball.Y += ball.Speed.Y;
+                ball.Speed.Y -= 0.5f * -100f * UpdateTime * UpdateTime;
+            ball.ball.X += (ball.Speed.X * UpdateTime);
+            ball.ball.Y += (ball.Speed.Y * UpdateTime);
 
             // Check Collision;
             if (ball.Collision(bumper.Bounds, out Result))
@@ -254,6 +257,13 @@ namespace BrickBreaker
         {
             GameOver = false;
             SetupGameRule();
+        }
+
+        private void BallSpeedTextBox_TextChanged(object sender, EventArgs e)
+        {
+            int newspeed = 0;
+            int.TryParse(BallSpeedTextBox.Text,out newspeed);
+            maxSpeed = new Vector2(newspeed, newspeed);
         }
     }
 }
